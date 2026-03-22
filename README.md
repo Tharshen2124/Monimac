@@ -2,6 +2,26 @@
 
 Monimac is a terminal user interface (TUI) for monitoring and managing a Mac mini from a MacBook. It shows live CPU and memory usage alongside running Docker containers, and lets you stop containers directly from the terminal.
 
+## Project Structure
+
+```
+monimac/
+├── cmd/
+│   └── main.go              # Application entry point
+├── internal/
+│   ├── docker/
+│   │   └── docker.go        # Docker container listing and stop operations
+│   ├── metrics/
+│   │   └── metrics.go       # CPU and memory stats via gopsutil
+│   └── tui/
+│       ├── model.go         # BubbleTea model, state machine, and message handling
+│       ├── styles.go        # Lipgloss colour and layout styles
+│       └── view.go          # All rendering logic (title, metrics, containers, footer)
+├── go.mod                   # Go module definition and dependencies
+├── go.sum                   # Dependency checksums
+└── mise.toml                # Tool version management (Go 1.26)
+```
+
 ## Requirements
 
 - Go 1.26 ([mise](https://mise.jdx.dev) is configured — run `mise install` to get the right version)
@@ -25,8 +45,8 @@ go mod download
 
 | Command | Description |
 |---------|-------------|
-| `go run .` | Run the TUI directly |
-| `go build -o monimac .` | Compile a binary |
+| `go run ./cmd` | Run the TUI directly |
+| `go build -o monimac ./cmd` | Compile a binary |
 | `./monimac` | Run the compiled binary |
 | `go mod tidy` | Sync dependencies after code changes |
 
